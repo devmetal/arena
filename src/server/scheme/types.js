@@ -20,7 +20,7 @@ const JobCountsType = new GraphQLObjectType({
     failed: { type: GraphQLInt },
     delayed: { type: GraphQLInt },
   }),
-})
+});
 
 const QueueDetailType = new GraphQLObjectType({
   name: 'QueueDetails',
@@ -29,14 +29,26 @@ const QueueDetailType = new GraphQLObjectType({
     redisStats: { type: GraphQLObjectType },
     jobList: { type: GraphQLString },
   }),
-})
+});
 
 const QueueType = new GraphQLObjectType({
   name: 'Queue',
   fields: () => ({
     name: { type: GraphQLString },
-    host: { type: GraphQLString },
     hostId: { type: GraphQLString },
     details: { type: QueueDetailType },
   }),
 });
+
+const RootQueryType = new GraphQLObjectType({
+  name: 'RootQuery',
+  fields: () => ({
+    queues: {
+      type: new GraphQLList(QueueType),
+      resolve(parent, req) {
+        const { Queues } = req.app.locals;
+        return Queues.list();
+      }
+    }
+  }),
+})
