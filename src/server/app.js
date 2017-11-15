@@ -3,6 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const handlebars = require('handlebars');
 const exphbs = require('express-handlebars');
+const expressGraphql = require('express-graphql');
 
 module.exports = function() {
   const hbs = exphbs.create({
@@ -30,6 +31,11 @@ module.exports = function() {
   app.engine('hbs', hbs.engine);
 
   app.use(bodyParser.json());
+
+  app.use('/graphql', expressGraphql({
+    schema,
+    graphiql: true,
+  }));
 
   return {
     app,
