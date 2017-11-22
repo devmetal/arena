@@ -110,6 +110,27 @@ const QueueType = new GraphQLObjectType({
   }),
 });
 
+const RootMutationType = new GraphQLObjectType({
+  name: 'RootMutation',
+  fields: () => ({
+    addJob: {
+      type: JobType,
+      args: {
+        queueName: { type: GraphQLString },
+        hostId: { type: GraphQLString },
+        data: { type: GraphQLJson },
+      },
+      async resolve(parent, args, req) {
+        const { queueName, hostId, data } = args;
+        const { Queues } = req.app.locals;
+        const queue = await Queues.get(queueName, hostId);
+        
+        return queue.add(data);
+      }
+    }
+  }),
+})
+
 const RootQueryType = new GraphQLObjectType({
   name: 'RootQuery',
   fields: () => ({
@@ -123,4 +144,4 @@ const RootQueryType = new GraphQLObjectType({
   }),
 })
 
-module.exports = RootQueryType;
+module.exports = { RootQueryType, RootMutationType };
