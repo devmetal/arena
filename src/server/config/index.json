@@ -7,5 +7,24 @@
       "hostId": "AWS Server 2"
     }
   ],
-  "queues": []
+  "queues": [
+    {
+      "name": "foo",
+      "port": 6379,
+      "host": "127.0.0.1",
+      "hostId": "localhost"
+    },
+    {
+      "name": "bar",
+      "port": 6379,
+      "host": "127.0.0.1",
+      "hostId": "localhost"
+    },
+    {
+      "name": "baz",
+      "port": 6379,
+      "host": "127.0.0.1",
+      "hostId": "localhost"
+    }
+  ]
 }

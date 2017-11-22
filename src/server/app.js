@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const handlebars = require('handlebars');
 const exphbs = require('express-handlebars');
 const expressGraphql = require('express-graphql');
+const schema = require('./schema');
 
 module.exports = function() {
   const hbs = exphbs.create({

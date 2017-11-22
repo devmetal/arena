@@ -57,7 +57,7 @@ const RedisStatsType = new GraphQLObjectType({
     usedMemory: { type: GraphQLString },
     memFragmentationRatio: { type: GraphQLString },
     connectedClients: { type: GraphQLString },
-    blockedClients: { type: GraphQLStrin },
+    blockedClients: { type: GraphQLString },
   }),
 });
 
