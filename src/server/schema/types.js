@@ -20,7 +20,7 @@ const JobType = new GraphQLObjectType({
     data: { type: GraphQLJson },
     timestamp: { type: GraphQLInt },
     attemptsMade: { type: GraphQLInt },
-    returnValue: { type: GraphQLJson },
+    returnvalue: { type: GraphQLJson },
     stacktrace: { type: GraphQLJson },
     failedReason: { type: GraphQLString },
     progress: {
@@ -140,7 +140,29 @@ const RootQueryType = new GraphQLObjectType({
         const { Queues } = req.app.locals;
         return Queues.list();
       }
-    }
+    },
+    queue: {
+      type: QueueType,
+      args: {
+        name: { type: GraphQLString },
+        hostId: { type: GraphQLString },
+      },
+      async resolve(parent, args, req) {
+        const { name, hostId } = args;
+        const { Queues } = req.app.locals;
+        const queue = await Queues.get(name, hostId);
+
+        if (!queue) {
+          return null;
+        }
+
+        return {
+          name,
+          hostId,
+          queue
+        };
+      },
+    },
   }),
 })
 
