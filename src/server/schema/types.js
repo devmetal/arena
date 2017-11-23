@@ -4,21 +4,35 @@ const {
   GraphQLBoolean,
   GraphQLString,
   GraphQLInt,
-  GraphQLID
+  GraphQLID,
+  GraphQLNonNull,
 } = require('graphql');
+const GraphQLJson = require('graphql-type-json');
 
 const _ = require('lodash/fp');
-const GraphQLJson = require('graphql-type-json');
+const range = require('lodash/range');
+const filter = require('lodash/filter');
+const last = require('lodash/last');
+const ceil = require('lodash/ceil');
 const QueueHelpers = require('../views/helpers/queueHelpers');
 
 const camelCase = _.mapKeys(_.camelCase);
+
+const PageInfoType = new GraphQLObjectType({
+  name: 'PageInfo',
+  fields: () => ({
+    currentPage: { type: GraphQLInt },
+    itemsPerPage: { type: GraphQLInt },
+    pages: { type: new GraphQLList(GraphQLInt) },
+  }),
+});
 
 const JobType = new GraphQLObjectType({
   name: 'Job',
   fields: () => ({
     id: { type: GraphQLID },
     data: { type: GraphQLJson },
-    timestamp: { type: GraphQLInt },
+    timestamp: { type: GraphQLString },
     attemptsMade: { type: GraphQLInt },
     returnvalue: { type: GraphQLJson },
     stacktrace: { type: GraphQLJson },
@@ -67,15 +81,43 @@ const QueueDetailsType = new GraphQLObjectType({
     jobCounts: { type: JobCountsType },
     redisStats: { type: RedisStatsType },
     jobList: {
-      type: new GraphQLList(JobType),
+      type: PaginatedJobType,
       args: {
-        state: { type: GraphQLString },
+        state: { type: new GraphQLNonNull(GraphQLString) },
+        currentPage: { type: new GraphQLNonNull(GraphQLInt) },
+        itemsPerPage: { type: new GraphQLNonNull(GraphQLInt) },
       },
       async resolve(parentValue, args) {
         const { queue } = parentValue;
-        const { state } = args;
-        return queue[`get${_.capitalize(state)}`]();
-      }
+        const {
+          currentPage,
+          itemsPerPage,
+          state,
+        } = args;
+
+        const startId = (currentPage - 1) * itemsPerPage;
+        const endId = startId + itemsPerPage - 1;
+
+        const jobCounts = await queue.getJobCounts();
+        const edges = await queue[`get${_.capitalize(state)}`](startId, endId);
+        
+        let pages = range(currentPage - 6, currentPage + 7)
+          .filter((page) => page >= 1);
+        
+        while (pages.length < 12) {
+          pages.push(last(pages) + 1);
+        }
+
+        pages = pages.filter((page) => page <= ceil(jobCounts[state] / itemsPerPage));
+
+        const pageInfo = {
+          currentPage,
+          itemsPerPage,
+          pages,
+        };
+
+        return { pageInfo, edges };
+      },
     },
   }),
 });
@@ -110,6 +152,18 @@ const QueueType = new GraphQLObjectType({
   }),
 });
 
+const PaginatedJobType = new GraphQLObjectType({
+  name: 'PaginatedJobs',
+  fields: () => ({
+    pageInfo: {
+      type: PageInfoType,
+    },
+    edges: {
+      type: new GraphQLList(JobType),
+    },
+  }),
+});
+
 const RootMutationType = new GraphQLObjectType({
   name: 'RootMutation',
   fields: () => ({
@@ -127,7 +181,7 @@ const RootMutationType = new GraphQLObjectType({
         
         return queue.add(data);
       }
-    }
+    },
   }),
 })
 
@@ -159,7 +213,7 @@ const RootQueryType = new GraphQLObjectType({
         return {
           name,
           hostId,
-          queue
+          queue,
         };
       },
     },
