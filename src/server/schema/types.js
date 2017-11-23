@@ -21,7 +21,7 @@ const JobType = new GraphQLObjectType({
     timestamp: { type: GraphQLInt },
     attemptsMade: { type: GraphQLInt },
     returnValue: { type: GraphQLJson },
-    stacktrace: { type: GraphQLString },
+    stacktrace: { type: GraphQLJson },
     failedReason: { type: GraphQLString },
     progress: {
       type: GraphQLInt,
@@ -74,7 +74,7 @@ const QueueDetailsType = new GraphQLObjectType({
       async resolve(parentValue, args) {
         const { queue } = parentValue;
         const { state } = args;
-        return queue[`get${_.capitalize(state)()}`]();
+        return queue[`get${_.capitalize(state)}`]();
       }
     },
   }),
