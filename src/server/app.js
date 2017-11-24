@@ -4,6 +4,9 @@ const bodyParser = require('body-parser');
 const handlebars = require('handlebars');
 const exphbs = require('express-handlebars');
 const expressGraphql = require('express-graphql');
+const webpack = require('webpack');
+const devMd = require('webpack-dev-middleware');
+const wConf = require('../../webpack.config');
 const schema = require('./schema');
 
 module.exports = function() {
@@ -37,6 +40,8 @@ module.exports = function() {
     schema,
     graphiql: true,
   }));
+
+  app.use(devMd(webpack(wConf)));
 
   return {
     app,
