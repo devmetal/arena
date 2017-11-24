@@ -1,4 +1,6 @@
-const query = `
+import gql from 'graphql-tag';
+
+export default gql`
 query QueueJobs(
   $name: String!, 
   $hostId: String!,
