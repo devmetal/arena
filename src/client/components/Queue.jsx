@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 import JobCounts from './JobCounts';
+import RedisStats from './RedisStats';
 import query from '../query/queue';
 
 class Queue extends Component {
@@ -26,6 +27,7 @@ class Queue extends Component {
       <div>
         <h1>{params.hostId} / {params.queueName}</h1>
         <JobCounts jobTypes={data.queue.details.jobCounts} />
+        <RedisStats {...data.queue.details.redisStats} />
       </div>
     );
   }
