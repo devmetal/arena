@@ -1,11 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { ListItem } from 'material-ui/List';
 
 const QueueListItem = ({ name, hostId }) => (
-  <div className="item">
-    <Link to={`/${hostId}/${name}`}>{hostId} / <b>{name}</b></Link>
-  </div>
+  <ListItem
+    primaryText={(
+      <div>
+        <Link to={`/${hostId}/${name}`}>
+          {name}
+        </Link>
+      </div>
+    )}
+    secondaryText={hostId}
+  />
 );
 
 QueueListItem.propTypes = {

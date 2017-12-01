@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import AppBar from 'material-ui/AppBar';
 import { graphql } from 'react-apollo';
 import pick from 'lodash/pick';
 import JobCounts from './JobCounts';
@@ -37,8 +38,7 @@ class Queue extends Component {
 
     return (
       <div>
-        <h1>{queue.hostId} / {queue.name}</h1>
-        <RedisStats {...queue.details.redisStats} />
+        <AppBar title={`${queue.hostId}/${queue.name}`} showMenuIconButton={false} />
         <JobCounts match={match} jobCountsByState={jobCountsByState} />
       </div>
     );

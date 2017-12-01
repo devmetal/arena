@@ -1,16 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Card, CardActions, CardHeader,  CardTitle, CardText} from 'material-ui/Card';
+import RaisedButton from 'material-ui/RaisedButton';
 import { Link } from 'react-router-dom';
 
+const style = {
+  width: '20rem',
+  margin: '0.5rem',
+};
+
 const JobCount = ({ state, count, match }) => (
-  <div>
-    <Link
-      to={`${match.url}/jobs/${state}`}
-    >
-      <h2>{state}</h2>
-    </Link>
-    <h3>{count}</h3>
-  </div>
+  <Card style={style}>
+    <CardHeader title={`${state} ${count}`} />
+    <CardActions>
+      <Link
+        to={`${match.url}/jobs/${state}`}
+      >
+        <RaisedButton label="Jobs" />
+      </Link>
+    </CardActions>
+  </Card>
 );
 
 JobCount.propTypes = {

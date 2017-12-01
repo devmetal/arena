@@ -6,6 +6,8 @@ import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import App from './App';
 
+import './style/reset.css';
+
 const client = new ApolloClient({
   dataIdFromObject: o => o.id,
   link: new HttpLink(),

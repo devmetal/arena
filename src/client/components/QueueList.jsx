@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
+import AppBar from 'material-ui/AppBar';
+import Paper from 'material-ui/Paper';
+import { List } from 'material-ui/List';
 import query from '../query/queues';
 import QueueListItem from './QueueListItem';
+
+const style = {
+  height: '100%',
+};
 
 class QueueList extends Component {
   static propTypes = {
@@ -17,7 +24,7 @@ class QueueList extends Component {
     const {
       data: {
         loading,
-        queues,
+      queues,
       },
     } = this.props;
 
@@ -26,10 +33,13 @@ class QueueList extends Component {
     }
 
     return (
-      <div className="queueList">
-        {queues.map(queue =>
-          <QueueListItem key={queue.id} {...queue} />)}
-      </div>
+      <Paper zDepth={1} style={style}>
+        <AppBar title="Queues" />
+        <List>
+          {queues.map(queue =>
+            <QueueListItem key={queue.id} {...queue} />)}
+        </List>
+      </Paper>
     );
   }
 }

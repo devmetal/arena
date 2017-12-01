@@ -39,11 +39,16 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: /node_modules/,
       },
+      {
+        use: ['style-loader', 'css-loader'],
+        test: /\.css$/,
+        exclude: /node_modules/,
+      }
     ],
   },
 
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.css'],
   },
 
   plugins,
