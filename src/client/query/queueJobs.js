@@ -12,6 +12,7 @@ query QueueJobs(
     name: $name, 
     hostId: $hostId
   ) {
+    id
     name
     hostId
     details {

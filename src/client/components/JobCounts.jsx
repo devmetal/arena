@@ -2,15 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import JobCount from './JobCount';
 
-const JobCounts = ({ jobTypes }) => (
+const JobCounts = ({ match, jobCountsByState }) => (
   <div>
-    {Object.keys(jobTypes).filter(key => key !== '__typename').map(key =>
-      <JobCount key={key} type={key} count={jobTypes[key]} />)}
+    <JobCount state="completed" count={jobCountsByState.completed} match={match} />
+    <JobCount state="waiting" count={jobCountsByState.waiting} match={match} />
+    <JobCount state="active" count={jobCountsByState.active} match={match} />
+    <JobCount state="failed" count={jobCountsByState.failed} match={match} />
+    <JobCount state="delayed" count={jobCountsByState.delayed} match={match} />
   </div>
 );
 
 JobCounts.propTypes = {
-  jobTypes: PropTypes.objectOf(PropTypes.number).isRequired,
+  jobCountsByState: PropTypes.objectOf(PropTypes.number).isRequired,
+  match: PropTypes.instanceOf(Object).isRequired,
 };
 
 export default JobCounts;

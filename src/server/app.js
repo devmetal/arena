@@ -41,7 +41,22 @@ module.exports = function() {
     graphiql: true,
   }));
 
-  app.use(devMd(webpack(wConf)));
+  const compiler = webpack(wConf);
+
+  app.use(devMd(compiler));
+
+  // Instead of history api fallback
+  app.use('*', (req, res, next) => {
+    const filename = path.join(compiler.outputPath, 'index.html');
+    compiler.outputFileSystem.readFile(filename, (err, result) => {
+      if (err) {
+        return next(err);
+      }
+      res.set('content-type', 'text/html');
+      res.send(result);
+      return res.end();
+    });
+  });
 
   return {
     app,

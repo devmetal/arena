@@ -6,7 +6,7 @@ const isDev = process.env.NODE_ENV !== 'production';
 
 const plugins = [
   new HtmlWebpackPlugin({
-    template: 'src/client/index.html'
+    template: 'src/client/index.html',
   }),
 ];
 
@@ -23,27 +23,28 @@ if (!isDev) {
 
 module.exports = {
   entry: './src/client/index.js',
-  
+
   output: {
     path: path.join(__dirname, 'src', 'client', 'build'),
     filename: 'bundle.js',
+    publicPath: '/',
   },
-  
-  devtool: 'sourcemap',
-  
+
+  devtool: 'source-map',
+
   module: {
     rules: [
       {
         use: 'babel-loader',
         test: /\.jsx?$/,
         exclude: /node_modules/,
-      }
+      },
     ],
   },
-  
+
   resolve: {
     extensions: ['.js', '.jsx'],
   },
-  
+
   plugins,
-}
+};

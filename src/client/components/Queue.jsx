@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
+import pick from 'lodash/pick';
 import JobCounts from './JobCounts';
 import RedisStats from './RedisStats';
 import query from '../query/queue';
@@ -17,17 +18,28 @@ class Queue extends Component {
   }
 
   render() {
-    const { data, match: { params } } = this.props;
+    const {
+      match,
+      data: {
+        loading,
+        queue,
+      },
+    } = this.props;
 
-    if (data.loading) {
+    if (loading) {
       return null;
     }
 
+    const jobCountsByState = pick(
+      queue.details.jobCounts,
+      ['completed', 'waiting', 'failed', 'active', 'delayed'],
+    );
+
     return (
       <div>
-        <h1>{params.hostId} / {params.queueName}</h1>
-        <JobCounts jobTypes={data.queue.details.jobCounts} />
-        <RedisStats {...data.queue.details.redisStats} />
+        <h1>{queue.hostId} / {queue.name}</h1>
+        <RedisStats {...queue.details.redisStats} />
+        <JobCounts match={match} jobCountsByState={jobCountsByState} />
       </div>
     );
   }
