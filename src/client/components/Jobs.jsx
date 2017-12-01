@@ -2,7 +2,17 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 import deepmerge from 'deepmerge';
+import styled from 'styled-components';
+import AppBar from 'material-ui/AppBar';
 import query from '../query/queueJobs';
+import Job from '../components/Job';
+
+const Flex = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-content: strech;
+`;
 
 class Jobs extends Component {
   static propTypes = {
@@ -22,25 +32,30 @@ class Jobs extends Component {
 
     const {
       queue: {
+        name,
+        hostId,
         details: {
           jobList,
         },
       },
     } = data;
 
+    const {
+      match: {
+        params: {
+          type,
+        },
+      },
+    } = this.props;
+
     return (
       <div>
-        {jobList.edges.map(job => (
-          <div key={job.id}>
-            #{job.id}
-            <div>{JSON.stringify(job.returnvalue)}</div>
-          </div>
-        ))}
-        <button
-          onClick={() => this.props.loadPage(3)}
-        >
-          Load next page
-        </button>
+        <AppBar title={`${hostId}/${name} ${type} Jobs`} showMenuIconButton={false} />
+        <Flex>
+          {jobList.edges.map(job => (
+            <Job key={job.id} job={job} />
+          ))}
+        </Flex>
       </div>
     );
   }

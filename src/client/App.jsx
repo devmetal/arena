@@ -2,7 +2,9 @@ import React from 'react';
 import { Grid, Col, Row } from 'react-styled-flexboxgrid'
 import styled, { ThemeProvider } from 'styled-components';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {
   BrowserRouter as Router,
   Route,
@@ -36,7 +38,7 @@ const style = {
 
 export default () => (
   <ThemeProvider theme={theme}>
-    <MuiThemeProvider>
+    <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
       <Router>
         <Grid style={style}>
           <Row style={style}>

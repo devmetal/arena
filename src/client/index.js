@@ -7,6 +7,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import App from './App';
 
 import './style/reset.css';
+import 'highlight.js/styles/dracula.css';
 
 const client = new ApolloClient({
   dataIdFromObject: o => o.id,

@@ -2817,6 +2817,10 @@ helper-md@^0.2.2:
     fs-exists-sync "^0.1.0"
     remarkable "^1.6.2"
 
+highlight.js@^9.12.0:
+  version "9.12.0"
+  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.12.0.tgz#e6d9dbe57cbefe60751f02af336195870c90c01e"
+
 history@^4.7.2:
   version "4.7.2"
   resolved "https://registry.yarnpkg.com/history/-/history-4.7.2.tgz#22b5c7f31633c5b8021c7f4a8a954ac139ee8d5b"
@@ -4656,7 +4660,7 @@ promise@^7.0.0, promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.6.0:
+prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.6.0:
   version "15.6.0"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.0.tgz#ceaf083022fc46b4a35f69e13ef75aed0d639856"
   dependencies:
@@ -4833,6 +4837,13 @@ react-styled-flexboxgrid@^2.1.1:
   resolved "https://registry.yarnpkg.com/react-styled-flexboxgrid/-/react-styled-flexboxgrid-2.1.1.tgz#3464201d27f36256f65bef1d2eb4188317d5a484"
   dependencies:
     lodash.isinteger "^4.0.4"
+
+react-syntax-highlight@^15.3.1:
+  version "15.3.1"
+  resolved "https://registry.yarnpkg.com/react-syntax-highlight/-/react-syntax-highlight-15.3.1.tgz#b44f6f77e2783e8f74c4b30b50d5a886cc35fc1f"
+  dependencies:
+    highlight.js "^9.12.0"
+    prop-types "^15.5.10"
 
 react-tap-event-plugin@^3.0.2:
   version "3.0.2"

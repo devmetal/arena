@@ -23,7 +23,14 @@ query QueueJobs(
       ) {
         edges {
           id,
-          returnvalue
+          data,
+          timestamp,
+          attemptsMade,
+          returnvalue,
+          stacktrace,
+          failedReason,
+          progress,
+          state
         },
         pageInfo {
           pages
