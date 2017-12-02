@@ -4,7 +4,7 @@ import Paper from 'material-ui/Paper';
 import FlatButton from 'material-ui/FlatButton';
 import styled from 'styled-components';
 import Highlight from 'react-syntax-highlight';
-import { inspect } from 'util';
+import Timestamp from './Timetsamp';
 
 const style = {
   margin: '0.5rem',
@@ -18,14 +18,16 @@ const DataTitle = styled.div`
 const Job = ({ job }) => (
   <Card style={style}>
     <CardHeader
-      title={job.id}
-      subtitle={job.timestamp}
+      title={`#${job.id}`}
+      subtitle={
+        <Timestamp secounds={+job.timestamp} />
+      }
       actAsExpander={true}
       showExpandableButton={true}
     />
     <CardActions>
-      <FlatButton label="Restart" />
-      <FlatButton label="Remove" />
+      <FlatButton primary label="Restart" />
+      <FlatButton secondary label="Remove" />
     </CardActions>
     <CardText expandable={true}>
       <Paper zDepth={1} style={{padding: '1rem'}}>

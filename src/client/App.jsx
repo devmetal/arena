@@ -40,9 +40,9 @@ export default () => (
   <ThemeProvider theme={theme}>
     <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
       <Router>
-        <Grid style={style}>
-          <Row style={style}>
-            <Col xs={12} sm={12} md={3} style={style}>
+        <Grid fluid style={{ height: '100%' }}>
+          <Row style={{ height: '100%', alignItems: 'stretch', alignContent: 'stretch' }}>
+            <Col xs={12} sm={12} md={3}>
               <QueueList/>
             </Col>
             <Col xs={12} sm={12} md={9}>

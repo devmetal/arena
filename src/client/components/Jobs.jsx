@@ -50,7 +50,7 @@ class Jobs extends Component {
 
     return (
       <div>
-        <AppBar title={`${hostId}/${name} ${type} Jobs`} showMenuIconButton={false} />
+        <AppBar title={`${hostId}/${name} ${type} jobs`} showMenuIconButton={false} />
         <Flex>
           {jobList.edges.map(job => (
             <Job key={job.id} job={job} />

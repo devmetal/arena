@@ -16,7 +16,7 @@ const JobCount = ({ state, count, match }) => (
       <Link
         to={`${match.url}/jobs/${state}`}
       >
-        <RaisedButton label="Jobs" />
+        <RaisedButton primary label="Jobs" />
       </Link>
     </CardActions>
   </Card>
