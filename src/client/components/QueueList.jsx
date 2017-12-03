@@ -7,10 +7,6 @@ import { List } from 'material-ui/List';
 import query from '../query/queues';
 import QueueListItem from './QueueListItem';
 
-const style = {
-  height: '100%',
-};
-
 class QueueList extends Component {
   static propTypes = {
     data: PropTypes.instanceOf(Object),
@@ -24,7 +20,7 @@ class QueueList extends Component {
     const {
       data: {
         loading,
-      queues,
+        queues,
       },
     } = this.props;
 
@@ -33,7 +29,7 @@ class QueueList extends Component {
     }
 
     return (
-      <Paper zDepth={1} style={style}>
+      <Paper zDepth={1} style={{ height: '100%' }}>
         <AppBar title="Queues" />
         <List>
           {queues.map(queue =>

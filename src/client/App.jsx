@@ -5,6 +5,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import Drawer from 'material-ui/Drawer';
 import {
   BrowserRouter as Router,
   Route,
@@ -32,26 +33,48 @@ const theme = {
   }
 }
 
-const style = {
-  height: '100%',
-};
+const Content = styled.div`
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: row;
+
+  justify-content: flex-start; /* align items in Main Axis */
+  align-items: stretch; /* align items in Cross Axis */
+  align-content: stretch; /* Extra space in Cross Axis */
+`;
+
+const MenuColumn = styled.div`
+  width: 20%;
+  overflow: auto;
+`;
+
+const ContentColumn = styled.div`
+  width: 80%;
+  overflow: auto;
+`;
 
 export default () => (
   <ThemeProvider theme={theme}>
     <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
       <Router>
-        <Grid fluid style={{ height: '100%' }}>
-          <Row style={{ height: '100%', alignItems: 'stretch', alignContent: 'stretch' }}>
-            <Col xs={12} sm={12} md={3}>
-              <QueueList/>
-            </Col>
-            <Col xs={12} sm={12} md={9}>
-              <Route exact path="/" component={Dashboard} />
-              <Route exact path="/:hostId/:queueName" component={Queue} />
-              <Route exact path="/:hostId/:queueName/jobs/:type" component={Jobs} />
-            </Col>
-          </Row>
-        </Grid>
+        <Content>
+          <MenuColumn>
+            <QueueList />
+          </MenuColumn>
+          <ContentColumn>
+            <Grid fluid>
+              <Row>
+                <Col xs>
+                  <Route exact path="/" component={Dashboard} />
+                  <Route exact path="/:hostId/:queueName" component={Queue} />
+                  <Route exact path="/:hostId/:queueName/jobs/:type" component={Jobs} />
+                </Col>
+              </Row>
+            </Grid>
+          </ContentColumn>
+        </Content>
       </Router>
     </MuiThemeProvider>
   </ThemeProvider>
