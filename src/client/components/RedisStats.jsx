@@ -3,10 +3,8 @@ import PropTypes from 'prop-types';
 import {
   Table,
   TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
   TableRowColumn,
+  TableRow,
 } from 'material-ui/Table';
 
 const RedisStats = ({
@@ -19,26 +17,35 @@ const RedisStats = ({
     blockedClients,
   },
 }) => (
-  <div>
-    <Table>
-      <TableBody>
+  <div style={{ margin: '0.5rem' }}>
+    <Table selectable={false}>
+      <TableBody displayRowCheckbox={false}>
         <TableRow>
-          <TableHeaderColumn>Redis Version</TableHeaderColumn>
+          <TableRowColumn>Redis Version</TableRowColumn>
           <TableRowColumn>{redisVersion}</TableRowColumn>
         </TableRow>
         <TableRow>
-          <TableHeaderColumn>Total System Memory</TableHeaderColumn>
+          <TableRowColumn>Total System Memory</TableRowColumn>
           <TableRowColumn>{totalSystemMemory}</TableRowColumn>
         </TableRow>
         <TableRow>
-          <TableHeaderColumn>Connected Clients</TableHeaderColumn>
+          <TableRowColumn>Used Memory</TableRowColumn>
+          <TableRowColumn>{usedMemory}</TableRowColumn>
+        </TableRow>
+        <TableRow>
+          <TableRowColumn>Memory Fragmentation Ratio</TableRowColumn>
+          <TableRowColumn>{memFragmentationRatio}</TableRowColumn>
+        </TableRow>
+        <TableRow>
+          <TableRowColumn>Connected Clients</TableRowColumn>
           <TableRowColumn>{connectedClients}</TableRowColumn>
+        </TableRow>
+        <TableRow>
+          <TableRowColumn>Blocked Clients</TableRowColumn>
+          <TableRowColumn>{blockedClients}</TableRowColumn>
         </TableRow>
       </TableBody>
     </Table>
-    <div>Ver.: {redisVersion}</div>
-    <div>Total Mem.: {totalSystemMemory}</div>
-    <div>Used Mem.: {usedMemory}</div>
   </div>
 );
 

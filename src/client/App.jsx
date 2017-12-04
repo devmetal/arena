@@ -5,7 +5,6 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import Drawer from 'material-ui/Drawer';
 import {
   BrowserRouter as Router,
   Route,
@@ -13,7 +12,7 @@ import {
 
 import Dashboard from './components/Dashboard';
 import QueueList from './components/QueueList';
-import Queue from './components/Queue';
+import QueuePage from './components/QueuePage';
 import Jobs from './components/Jobs';
 
 // Needed for onTouchTap
@@ -30,8 +29,8 @@ const theme = {
       md: '100%',
       lg: '100%',
     },
-  }
-}
+  },
+};
 
 const Content = styled.div`
   width: 100%;
@@ -68,7 +67,7 @@ export default () => (
               <Row>
                 <Col xs>
                   <Route exact path="/" component={Dashboard} />
-                  <Route exact path="/:hostId/:queueName" component={Queue} />
+                  <Route exact path="/:hostId/:queueName" component={QueuePage} />
                   <Route exact path="/:hostId/:queueName/jobs/:type" component={Jobs} />
                 </Col>
               </Row>

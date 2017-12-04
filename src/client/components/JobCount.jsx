@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, CardActions, CardHeader } from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import { Link, withRouter } from 'react-router-dom';
 
 const style = {
@@ -11,12 +11,12 @@ const style = {
 
 const JobCount = ({ state, count, match }) => (
   <Card style={style}>
-    <CardHeader title={`${state} ${count}`} />
+    <CardHeader title={count} subtitle={state} />
     <CardActions>
       <Link
         to={`${match.url}/jobs/${state}`}
       >
-        <FlatButton primary label="Jobs" />
+        <RaisedButton fullWidth primary label="View Jobs" />
       </Link>
     </CardActions>
   </Card>
