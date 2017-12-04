@@ -4,7 +4,7 @@ import { graphql } from 'react-apollo';
 import deepmerge from 'deepmerge';
 import styled from 'styled-components';
 import AppBar from 'material-ui/AppBar';
-import DropdownMenu, { DropDownMenu } from 'material-ui/DropDownMenu';
+import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import query from '../query/queueJobs';
 import Job from '../components/Job';
@@ -62,12 +62,12 @@ class Jobs extends Component {
     return (
       <div>
         <AppBar
-          title={`${hostId}/${name} ${type} jobs`} 
+          title={`${hostId}/${name} ${type} jobs`}
           showMenuIconButton={false}
         />
         <div>
-          <DropDownMenu 
-            value={this.state.itemsPerPage} 
+          <DropDownMenu
+            value={this.state.itemsPerPage}
             onChange={this.setItemsPerPage}
           >
             <MenuItem value={10} primaryText="10" />

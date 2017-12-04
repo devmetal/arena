@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Col, Row } from 'react-styled-flexboxgrid'
 import styled from 'styled-components';
 import JobCount from './JobCount';
 
@@ -10,19 +9,18 @@ const Flex = styled.div`
   align-content: strech;
 `;
 
-const JobCounts = ({ match, jobCountsByState }) => (
+const JobCounts = ({ jobCounts }) => (
   <Flex>
-    <JobCount state="completed" count={jobCountsByState.completed} match={match} />
-    <JobCount state="waiting" count={jobCountsByState.waiting} match={match} />
-    <JobCount state="active" count={jobCountsByState.active} match={match} />
-    <JobCount state="failed" count={jobCountsByState.failed} match={match} />
-    <JobCount state="delayed" count={jobCountsByState.delayed} match={match} />
+    <JobCount state="completed" count={jobCounts.completed} />
+    <JobCount state="waiting" count={jobCounts.waiting} />
+    <JobCount state="active" count={jobCounts.active} />
+    <JobCount state="failed" count={jobCounts.failed} />
+    <JobCount state="delayed" count={jobCounts.delayed} />
   </Flex>
 );
 
 JobCounts.propTypes = {
-  jobCountsByState: PropTypes.objectOf(PropTypes.number).isRequired,
-  match: PropTypes.instanceOf(Object).isRequired,
+  jobCounts: PropTypes.objectOf(PropTypes.number).isRequired,
 };
 
 export default JobCounts;
