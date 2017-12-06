@@ -4,10 +4,9 @@ import { graphql } from 'react-apollo';
 import deepmerge from 'deepmerge';
 import styled from 'styled-components';
 import AppBar from 'material-ui/AppBar';
-import DropDownMenu from 'material-ui/DropDownMenu';
-import MenuItem from 'material-ui/MenuItem';
 import query from '../query/queueJobs';
-import Job from '../components/Job';
+import Pager from './Pager';
+import Job from './Job';
 
 const Flex = styled.div`
   display: flex;
@@ -16,22 +15,33 @@ const Flex = styled.div`
   align-content: strech;
 `;
 
-class Jobs extends Component {
+class JobsPage extends Component {
   static propTypes = {
     loadPage: PropTypes.func.isRequired,
     data: PropTypes.shape({
       loading: PropTypes.bool.isRequired,
       queue: PropTypes.instanceOf(Object),
     }).isRequired,
+    match: PropTypes.instanceOf(Object).isRequired,
   };
 
   state = {
     itemsPerPage: 10,
+    currentPage: 1,
   };
 
-  setItemsPerPage = (e, i, val) => {
-    this.setState({ itemsPerPage: val });
-    this.props.loadPage(1, val);
+  setItemsPerPage = (n) => {
+    this.setState({
+      itemsPerPage: n,
+      currentPage: 1,
+    });
+    this.props.loadPage(1, n);
+  }
+
+  setCurrentPage = (n) => {
+    const { itemsPerPage } = this.state;
+    this.setState({ currentPage: n });
+    this.props.loadPage(n, itemsPerPage);
   }
 
   render() {
@@ -66,16 +76,13 @@ class Jobs extends Component {
           showMenuIconButton={false}
         />
         <div>
-          <DropDownMenu
-            value={this.state.itemsPerPage}
-            onChange={this.setItemsPerPage}
-          >
-            <MenuItem value={10} primaryText="10" />
-            <MenuItem value={50} primaryText="50" />
-            <MenuItem value={100} primaryText="100" />
-            <MenuItem value={500} primaryText="500" />
-            <MenuItem value={1000} primaryText="1000" />
-          </DropDownMenu>
+          <Pager
+            onChangeItemsPerPage={this.setItemsPerPage}
+            onChangePage={this.setCurrentPage}
+            itemsPerPage={this.state.itemsPerPage}
+            currentPage={this.state.currentPage}
+            pages={jobList.pageInfo.pages}
+          />
         </div>
         <Flex>
           {jobList.edges.map(job => (
@@ -131,4 +138,4 @@ export default graphql(query, {
       data,
     };
   },
-})(Jobs);
+})(JobsPage);

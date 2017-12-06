@@ -13,7 +13,7 @@ import {
 import Dashboard from './components/Dashboard';
 import QueueList from './components/QueueList';
 import QueuePage from './components/QueuePage';
-import Jobs from './components/Jobs';
+import JobsPage from './components/JobsPage';
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
@@ -68,7 +68,7 @@ export default () => (
                 <Col xs>
                   <Route exact path="/" component={Dashboard} />
                   <Route exact path="/:hostId/:queueName" component={QueuePage} />
-                  <Route exact path="/:hostId/:queueName/jobs/:type" component={Jobs} />
+                  <Route exact path="/:hostId/:queueName/jobs/:type" component={JobsPage} />
                 </Col>
               </Row>
             </Grid>
