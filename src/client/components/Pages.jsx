@@ -13,6 +13,11 @@ const BtnGroup = styled.div`
   display: flex;
 `;
 
+const btnStyle = {
+  width: 'auto',
+  minWidth: 'auto',
+};
+
 export default class extends Component {
   static propTypes = {
     pages: PropTypes.arrayOf(PropTypes.number).isRequired,
@@ -38,6 +43,7 @@ export default class extends Component {
               label={p}
               disabled={p === value}
               onClick={() => this.handleClick(p)}
+              style={btnStyle}
             />
           ))}
         </BtnGroup>

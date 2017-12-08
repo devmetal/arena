@@ -4,16 +4,16 @@ import { Link } from 'react-router-dom';
 import { ListItem } from 'material-ui/List';
 
 const QueueListItem = ({ name, hostId }) => (
-  <ListItem
-    primaryText={(
-      <div>
-        <Link to={`/${hostId}/${name}`}>
+  <Link to={`/${hostId}/${name}`}>
+    <ListItem
+      primaryText={(
+        <div>
           {name}
-        </Link>
-      </div>
-    )}
-    secondaryText={hostId}
-  />
+        </div>
+      )}
+      secondaryText={hostId}
+    />
+  </Link>
 );
 
 QueueListItem.propTypes = {
