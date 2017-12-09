@@ -145,11 +145,8 @@ const QueueType = new GraphQLObjectType({
     hostId: { type: GraphQLString },
     details: {
       type: QueueDetailsType,
-      async resolve(parentValue, args, req) {
-        const { name, hostId } = parentValue;
-        const { Queues } = req.app.locals;
-
-        const queue = await Queues.get(name, hostId);
+      async resolve(parentValue) {
+        const { queue } = parentValue;
 
         if (!queue) {
           return null;
@@ -194,9 +191,20 @@ const RootQueryType = new GraphQLObjectType({
   fields: () => ({
     queues: {
       type: new GraphQLList(QueueType),
-      resolve(parent, args, req) {
-        const { Queues } = req.app.locals;
-        return Queues.list();
+      async resolve(parent, args, { request }) {
+        const { Queues } = request.app.locals;
+        const queuesList = Queues.list();
+
+        return Promise.all(queuesList.map((q) => {
+          const { name, hostId } = q;
+          return Promise.all([q, Queues.get(name, hostId)]);
+        }))
+          .then((queues) => {
+            return queues.map(([queueDatas, queue]) => ({
+              ...queueDatas,
+              queue,
+            }));
+          });
       },
     },
     queue: {

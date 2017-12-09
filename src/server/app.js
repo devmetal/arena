@@ -3,13 +3,13 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const handlebars = require('handlebars');
 const exphbs = require('express-handlebars');
-const expressGraphql = require('express-graphql');
+const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 const webpack = require('webpack');
 const devMd = require('webpack-dev-middleware');
 const wConf = require('../../webpack.config');
 const schema = require('./schema');
 
-module.exports = function() {
+module.exports = function main() {
   const hbs = exphbs.create({
     defaultLayout: `${__dirname}/views/layout`,
     handlebars,
@@ -36,9 +36,13 @@ module.exports = function() {
 
   app.use(bodyParser.json());
 
-  app.use('/graphql', expressGraphql({
+  app.use('/graphql', graphqlExpress(request => ({
     schema,
-    graphiql: true,
+    context: { request },
+  })));
+
+  app.use('/graphiql', graphiqlExpress({
+    endpointURL: '/graphql',
   }));
 
   const compiler = webpack(wConf);

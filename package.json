@@ -8,6 +8,7 @@
     "apollo-cache-inmemory": "^1.1.1",
     "apollo-client": "^2.0.3",
     "apollo-link-http": "^1.2.0",
+    "apollo-server-express": "^1.2.0",
     "bee-queue": "^1.0.0",
     "body-parser": "^1.17.2",
     "bull": "^3.0.0-rc.2",
