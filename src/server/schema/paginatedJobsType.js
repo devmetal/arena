@@ -8,4 +8,4 @@ const PaginatedJobs = `
   }
 `;
 
-export default () => [PaginatedJobs, PageInfo, Job];
+module.exports.typedef = () => [PaginatedJobs, PageInfo.typedef, Job.typedef];

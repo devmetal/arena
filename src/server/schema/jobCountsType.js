@@ -8,4 +8,4 @@ const JobCounts = `
   }
 `;
 
-export default () => [JobCounts];
+module.exports.typedef = () => [JobCounts];

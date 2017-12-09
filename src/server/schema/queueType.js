@@ -24,7 +24,13 @@ const Queue = `
   }
 `;
 
-export const resolvers = {
+module.exports.typedef = () =>
+  [Queue, JobCounts.typedef, RedisStats.typedef, PaginatedJobs.typedef];
+
+module.exports.resolvers = {
+  id({ name, hostId }) {
+    return `${name}:${hostId}`;
+  },
   async jobCounts({ queue }) {
     return queue.getJobCounts();
   },
@@ -63,5 +69,3 @@ export const resolvers = {
     return { pageInfo, edges };
   },
 };
-
-export default () => [Queue, JobCounts, RedisStats, PaginatedJobs];

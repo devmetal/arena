@@ -9,4 +9,4 @@ const RedisStats = `
   }
 `;
 
-export default () => [RedisStats];
+module.exports.typedef = () => [RedisStats];

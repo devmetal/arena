@@ -6,4 +6,4 @@ const PageInfo = `
   }
 `;
 
-export default () => [PageInfo];
+module.exports.typedef = () => [PageInfo];

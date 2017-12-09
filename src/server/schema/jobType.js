@@ -1,5 +1,3 @@
-const Json = require('graphql-type-json');
-
 const Job = `
   type Job {
     id: ID!
@@ -14,7 +12,9 @@ const Job = `
   }
 `;
 
-export const resolvers = {
+module.exports.typedef = () => [Job];
+
+module.exports.resolvers = {
   progress(parent) {
     return parent._progress;
   },
@@ -22,5 +22,3 @@ export const resolvers = {
     return parent.getState();
   },
 };
-
-export default () => [Job, Json];
